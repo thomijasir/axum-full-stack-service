@@ -15,26 +15,26 @@ impl fmt::Display for ErrorResponse {
         write!(f, "{}", serde_json::to_string(&self).expect("Failed convert to string"))
     }
 }
-#[derive(Debug, PartialEq)]
-pub enum StatusMessage {
-    SUCCESS,
-    FAIL,
-}
-impl StatusMessage {
-    fn to_str(&self) -> String {
-        match self {
-            StatusMessage::SUCCESS => "success".to_string(),
-            StatusMessage::FAIL => "fail".to_string(),
-            _ => "Unknown status".to_owned()
-        }
-    }
-}
+// #[derive(Debug, PartialEq)]
+// pub enum StatusMessage {
+//     SUCCESS,
+//     FAIL,
+// }
+// impl StatusMessage {
+//     fn to_str(&self) -> String {
+//         match self {
+//             StatusMessage::SUCCESS => "success".to_string(),
+//             StatusMessage::FAIL => "fail".to_string(),
+//             _ => "Unknown status".to_owned()
+//         }
+//     }
+// }
 
-impl ToString for StatusMessage {
-    fn to_string(&self) -> String {
-        self.to_str().to_owned()
-    }
-}
+// impl ToString for StatusMessage {
+//     fn to_string(&self) -> String {
+//         self.to_str().to_owned()
+//     }
+// }
 
 #[derive(Debug, PartialEq)]
 pub enum ErrorMessage {
@@ -43,10 +43,10 @@ pub enum ErrorMessage {
     InvalidHashFormat,
     HashingError,
     InvalidToken,
-    ServiceError,
+    // ServiceError,
     WrongCredentials,
     EmailExists,
-    UserNotFound,
+    // UserNotFound,
     UserNoLongerExists,
     TokenNotProvided,
     PermissionDenied,
@@ -67,10 +67,10 @@ impl ErrorMessage {
             ErrorMessage::InvalidHashFormat => "Invalid password hash format".to_string(),
             ErrorMessage::HashingError => "Invalid hashing format".to_string(),
             ErrorMessage::InvalidToken => "Invalid token".to_string(),
-            ErrorMessage::ServiceError => "Service error".to_string(),
+            // ErrorMessage::ServiceError => "Service error".to_string(),
             ErrorMessage::WrongCredentials => "Wrong credentials".to_string(),
             ErrorMessage::EmailExists => "Email already exists".to_string(),
-            ErrorMessage::UserNotFound => "User not found".to_string(),
+            // ErrorMessage::UserNotFound => "User not found".to_string(),
             ErrorMessage::UserNoLongerExists => "User no longer exists".to_string(),
             ErrorMessage::TokenNotProvided => "Token not provided".to_string(),
             ErrorMessage::PermissionDenied => "Permission denied".to_string(),

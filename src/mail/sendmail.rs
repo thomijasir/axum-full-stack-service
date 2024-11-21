@@ -27,6 +27,7 @@ pub async fn send_email(
     let email = Message::builder()
         .from(smtp_username.parse()?)
         .to(to_email.parse()?)
+        .subject(subject.to_owned())
         .header(header::ContentType::TEXT_HTML)
         .singlepart(SinglePart::builder()
             .header(header::ContentType::TEXT_HTML)

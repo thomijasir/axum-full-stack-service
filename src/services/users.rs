@@ -1,7 +1,6 @@
 use std::sync::Arc;
 use axum::{middleware, Extension, Json, Router};
 use axum::extract::Query;
-use axum::handler::Handler;
 use axum::response::IntoResponse;
 use axum::routing::{get, put};
 use validator::Validate;
@@ -13,7 +12,7 @@ use crate::{
     middleware::{role_check, JWTAuthMiddleware},
     utils::{password},
     dtos::{
-        FilterUserDto, UserData, UserResponseDto,
+        FilterUserDto, UserResponseDto,
         RoleUpdateDto, RequestQueryDto, UserListResponseDto,
         NameUpdateDto, UserPasswordUpdateDto, Response
     }
@@ -39,7 +38,6 @@ pub fn users_handler() -> Router {
 }
 
 pub async fn  get_me(
-    Extension(state): Extension<Arc<AppState>>,
     Extension(user): Extension<JWTAuthMiddleware>
 ) -> Result<impl IntoResponse, HttpError> {
     let filtered_user = FilterUserDto::filter_user(&user.user);

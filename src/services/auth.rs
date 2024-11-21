@@ -94,23 +94,23 @@ pub async fn login(
         .map_err(|e|HttpError::server_error(e.to_string()))?;
     let user = result.ok_or(HttpError::bad_request(ErrorMessage::WrongCredentials.to_string()))?;
     let password_matched = password::compare(&body.password, &user.password)
-        .map_err(|e|HttpError::bad_request(ErrorMessage::WrongCredentials.to_string()))?;
+        .map_err(|_e|HttpError::bad_request(ErrorMessage::WrongCredentials.to_string()))?;
     if password_matched {
-        let token = token::create_token(
+        let token_result = token::create_token(
             &user.id.to_string(),
             &state.env.jwt_secret.as_bytes(),
             state.env.jwt_maxage
         )
             .map_err(|e|HttpError::server_error(e.to_string()))?;
         let cookie_duration = time::Duration::minutes(state.env.jwt_maxage * 60);
-        let cookie = Cookie::build(("token", token.clone()))
+        let cookie = Cookie::build(("token", token_result.clone()))
             .path("/")
             .max_age(cookie_duration)
             .http_only(true)
             .build();
         let responses = Json(UserLoginResponseDto{
             status: "success".to_string(),
-            token,
+            token: token_result,
         });
 
         let mut headers = HeaderMap::new();
