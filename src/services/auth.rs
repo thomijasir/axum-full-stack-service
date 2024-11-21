@@ -30,7 +30,7 @@ use crate::{
     },
     error::ErrorMessage
 };
-use crate::error::StatusMessage;
+// use crate::error::StatusMessage;
 
 pub fn auth_handler() -> Router {
     Router::new()
@@ -47,6 +47,7 @@ pub async fn register(
 ) -> Result<impl IntoResponse, HttpError> {
     body.validate()
         .map_err(|e|HttpError::bad_request(e.to_string()))?;
+
     let verification_token = uuid::Uuid::new_v4().to_string();
     let expires_at = Utc::now() + Duration::hours(24);
 
@@ -143,9 +144,9 @@ pub async fn verify_email(
     if let Some(expires_at) = user.token_expires_at {
         if Utc::now() > expires_at {
             return Err(HttpError::bad_request("Verification token has expire".to_string()))?;
-        } else {
-            return Err(HttpError::bad_request("Invalid verification token".to_string()))?;
         }
+    } else {
+        return Err(HttpError::bad_request("Invalid verification token".to_string()))?;
     }
 
     app_state.db_client.verified_token(&query_params.token).await

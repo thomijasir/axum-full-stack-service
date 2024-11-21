@@ -83,7 +83,7 @@ pub struct UserData {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct  UserResponseDto {
     pub status: String,
-    pub data: UserData
+    pub data: FilterUserDto
 }
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserListResponseDto {

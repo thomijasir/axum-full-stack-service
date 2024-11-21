@@ -45,9 +45,7 @@ pub async fn  get_me(
     let filtered_user = FilterUserDto::filter_user(&user.user);
     let response_data = UserResponseDto{
         status: "success".to_string(),
-        data: UserData {
-            user: filtered_user
-        }
+        data: filtered_user
     };
 
     Ok(Json(response_data))
@@ -101,9 +99,7 @@ pub async fn update_user_name(
     let filtered_user = FilterUserDto::filter_user(&result);
 
     let response = UserResponseDto {
-        data: UserData {
-            user: filtered_user,
-        },
+        data: filtered_user,
         status: "success".to_string(),
     };
 
@@ -130,9 +126,7 @@ pub async fn update_user_role(
     let filtered_user = FilterUserDto::filter_user(&result);
 
     let response = UserResponseDto {
-        data: UserData {
-            user: filtered_user,
-        },
+        data: filtered_user,
         status: "success".to_string(),
     };
 
